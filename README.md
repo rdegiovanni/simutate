@@ -2,27 +2,29 @@
 
 mvn clean package install
 
-java -jar [target-repository]/simute.jar [arguments]
+java -jar [target-repository]/simutate-1.0.jar [arguments]
 
 
-[argument] options based on tasks:
+options based on tasks:
 
-simulate codebert Math
+java -jar [target-repository]/simutate-1.0.jar simulate codebert Math
 
-flatten codebert
+java -jar [target-repository]/simutate-1.0.jar flatten codebert
 
-getalltests codebert
+java -jar [target-repository]/simutate-1.0.jar getalltests codebert
 
-processsourcepatches codebert
+java -jar [target-repository]/simutate-1.0.jar processsourcepatches codebert
 
-abstract
+java -jar [target-repository]/simutate-1.0.jar abstract
 
-unabstract
+java -jar [target-repository]/simutate-1.0.jar unabstract
 
 
 NOTE: please do not forget to modify below variable in data.java file to specify your desired repository location
 
 static String dirMain = isWindows ? "C:/GitHub/mutation" : "/home/agarg/ag/mutation";
+
+-----------------------------------------------------------------------------------------------------------------------------
 
 below is an example:
 
@@ -44,7 +46,10 @@ Also for tasks "flatten", "processsourcepatches", and "getalltests", please pass
 
 Additional 1. mutant directory technique suffix (e.g. nmt / codebert / ...)
 
+-----------------------------------------------------------------------------------------------------------------------------
 
 please feel free to fork it, modify and use it as per your convenience.
+
+NOTE: I know readme is not descriptive, I am working on it... meanwhile feel free to reach out to me for suggestions/questions/concerns.
 
 cheers!
