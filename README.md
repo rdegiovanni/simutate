@@ -1,5 +1,13 @@
 # simutate
 
+stuff you require before runnning
+
+1. defects4j (available here: https://github.com/rjust/defects4j)
+2. srcML (available here: https://www.srcml.org/)
+3. src2abs (available here: https://github.com/micheletufano/src2abs) for abstraction task (if you wish to perform it)
+
+-----------------------------------------------------------------------------------------------------------------------------
+
 mvn clean package install
 
 java -jar [target-repository]/simutate-1.0.jar [arguments]
