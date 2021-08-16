@@ -5,7 +5,7 @@ mvn clean package install
 java -jar [target-repository]/simute.jar [arguments]
 
 
-[argument] options based on tasks
+[argument] options based on tasks:
 
 simulate codebert Math
 
