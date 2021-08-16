@@ -1,6 +1,6 @@
 # simutate
 
-tasks that can be performed: 
+mvn clean package install
 
 java -jar [target-repository]/simute.jar [arguments]
 
