@@ -29,12 +29,19 @@ below is an example:
 java -jar C:\GitHub\simutate\target\simutate-1.0.jar
 
 please pass below as arguments and try again
+
 1. a task to perform (e.g. abstract / unabstract / processsourcepatches / simulate / flatten / getalltests )
+
 NOTE: for task "simulate", please pass below as additional arguments and try again
+
 Additional 1. mutant directory technique suffix (e.g. nmt / codebert / ...)
+
 Additional 2. project name to perform simulation for (e.g. Cli)
+
 and
+
 Also for tasks "flatten", "processsourcepatches", and "getalltests", please pass below as additional arguments and try again
+
 Additional 1. mutant directory technique suffix (e.g. nmt / codebert / ...)
 
 
