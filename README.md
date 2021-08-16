@@ -2,7 +2,7 @@
 
 stuff you require before runnning
 
-1. defects4j (available here: https://github.com/rjust/defects4j)
+1. defects4j (available here: https://github.com/rjust/defects4j) for simulation task, i.e., for compiling and running tests
 2. srcML (available here: https://www.srcml.org/)
 3. src2abs (available here: https://github.com/micheletufano/src2abs) for abstraction task (if you wish to perform it)
 
