@@ -114,7 +114,7 @@ public class data {
     static String strInitialCommandForCheckout02 = " -v ";
     static String strInitialCommandForCheckout03 = " -w ";
     static String strSudoDeleteProcessingDir01 = strInitialCommandForAgd4jDocker + " "
-            + strCommandExecutionInitial01 + " " + strCommandExecutionInitial02 + " '" + "rm -r";
+            + strCommandExecutionInitial01 + " " + strCommandExecutionInitial02 + " '" + "rm -rf";
     static String strApostrophe = "'";
     static String strInitialCommandForCdInDocker = strInitialCommandForAgd4jDocker + " "
             + strCommandExecutionInitial01 + " " + strCommandExecutionInitial02 + " '" + "cd ";
