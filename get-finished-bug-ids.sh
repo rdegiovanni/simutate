@@ -5,12 +5,14 @@ echo $SIMU_DIR
 for txt_file in `ls simulation-codebert/simulation-*`; do	# echo $source_file
 	echo $txt_file
 	BASE_NAME=${txt_file%%.txt*}
+	OLD_IFS=$IFS
 	IFS='-' #setting comma as delimiter  
 	read -a strarr <<<"$BASE_NAME" 
 	PROJECT_NAME="${strarr[2]}"
 	BUG_ID="${strarr[3]}"
 	echo $PROJECT_NAME
 	echo $BUG_ID
+	IFS=$OLD_IFS
 	cp $txt_file $SIMU_DIR/.
 	cp -r simulation-codebert/$BUG_ID $SIMU_DIR/.
 	#if [[ $BUG_ID == $1* ]] ;
