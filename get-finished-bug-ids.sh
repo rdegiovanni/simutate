@@ -1,15 +1,18 @@
 #!/bin/bash
 USERDIR=/home/users/rdegiovanni/
-RESULT_DIR=$USERDIR/simulation-codebert-results/
-for txt_file in `ls -l simulation-codebert/simulation-*`; do	# echo $source_file
+SIMU_DIR=/home/users/rdegiovanni/simulation-codebert-results/
+echo $SIMU_DIR
+for txt_file in `ls simulation-codebert/simulation-*`; do	# echo $source_file
 	echo $txt_file
 	BASE_NAME=${txt_file%%.txt*}
 	IFS='-' #setting comma as delimiter  
 	read -a strarr <<<"$BASE_NAME" 
-	PROJECT_NAME="${strarr[1]}"
-	BUG_ID="${strarr[2]}"
+	PROJECT_NAME="${strarr[2]}"
+	BUG_ID="${strarr[3]}"
 	echo $PROJECT_NAME
 	echo $BUG_ID
+	cp $txt_file $SIMU_DIR/.
+	cp -r simulation-codebert/$BUG_ID $SIMU_DIR/.
 	#if [[ $BUG_ID == $1* ]] ;
 	#then
 	#  echo $BUG_ID
