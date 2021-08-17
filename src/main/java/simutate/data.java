@@ -16,7 +16,7 @@ import java.util.LinkedList;
 public class data {
 
     static Boolean isWindows = false;
-    static String dirMain = "/home/users/rdegiovanni/";
+    static String dirMain = "/home/users/rdegiovanni/simutate/";
     static String strCommandExecutionInitial01 = isWindows ? "cmd.exe" : "bash";
     static String strCommandExecutionInitial02 = isWindows ? "/c" : "-c";
     //for this srcml is not in docker
