@@ -149,7 +149,7 @@ public class util {
         }
     }
 
-//    public String ExecuteBashFile(String batchFilePath, String codeFilePath) throws Exception {
+    //    public String ExecuteBashFile(String batchFilePath, String codeFilePath) throws Exception {
 //        try {
 //            Commandline commandLine = new Commandline();
 //
@@ -560,8 +560,8 @@ public class util {
     }
 
     public void ProcessFunctions(String strCodeFilePath, String strCleanedXML, String strCleanedCode,
-            //String packageName,
-            String className, LinkedList<String> listFnXMLs) throws Exception {
+                                 //String packageName,
+                                 String className, LinkedList<String> listFnXMLs) throws Exception {
         try {
 
             File file = new File(strCodeFilePath);
@@ -922,7 +922,7 @@ public class util {
     }
 
     public void SaveOutputs(String projectName, String packageName, String className, Integer processingFnCount,
-            Integer fnCcount, String strAssertedFnXML, String strAssertedCleanCode, String newProcessDirPath) {
+                            Integer fnCcount, String strAssertedFnXML, String strAssertedCleanCode, String newProcessDirPath) {
         try {
 
             String strNewDirPath = GetPerfectResultsDirPath(projectName, packageName, className, processingFnCount);
@@ -1125,23 +1125,62 @@ public class util {
         }
     }
 
-    LinkedList<Integer> GetChangedLineNums(LinkedList<String> lstPatch) {
-        LinkedList<Integer> lstChangedLineNums = new LinkedList();
+    LinkedList<HashMap<Integer, Integer>> GetListOfFirstMinusAndPlus(LinkedList<String> lstPatch) {
+        LinkedList<HashMap<Integer, Integer>> retList = new LinkedList();
         try {
+            Integer firstMinus = 0;
+            Integer firstPlus = 0;
+            Integer changedLineNum = 0;
+            Integer counter = 0;
             for (String line : lstPatch) {
                 if (line.contains(data.strToLookInPatch) && line.indexOf(data.strToLookInPatch) == 0) {
+                    if (firstMinus != 0 || firstPlus != 0) {
+                        HashMap<Integer, Integer> mapFirstMinusAndPlus = new HashMap();
+                        mapFirstMinusAndPlus.put(firstMinus, firstPlus);
+                        retList.add(mapFirstMinusAndPlus);
+                        firstMinus = 0;
+                        firstPlus = 0;
+                        changedLineNum = 0;
+                        counter = 0;
+                    }
                     String[] arrLine = line.split(Pattern.quote(" "));
                     String changedLinePhrase = arrLine[1];
                     String[] arrChangedLinePhrase = changedLinePhrase.split(Pattern.quote(","));
-                    Integer changedLineNum = Integer.parseInt(arrChangedLinePhrase[0].replace("+", "").replace("-", ""));
-                    lstChangedLineNums.add(changedLineNum);
+                    changedLineNum = Integer.parseInt(arrChangedLinePhrase[0].replace("+", "").replace("-", ""));
+                } else if (changedLineNum != 0) {
+                    if (line.startsWith("+")) {
+                        if (firstPlus == 0) {
+                            firstPlus = changedLineNum + counter;
+                            if (firstPlus == firstMinus + 1) {
+                                firstPlus = firstMinus;
+                            }
+                        }
+                    } else if (line.startsWith("-")) {
+                        if (firstMinus == 0) {
+                            firstMinus = changedLineNum + counter;
+                            if (firstPlus != 0) {
+                                firstMinus = firstPlus;
+                            }
+                        }
+                    }
+                    counter++;
                 }
             }
-            return lstChangedLineNums;
+            //to add the last patch which will not be added otherwise due to end of list
+            if (firstMinus != 0 || firstPlus != 0) {
+                HashMap<Integer, Integer> mapFirstMinusAndPlus = new HashMap();
+                mapFirstMinusAndPlus.put(firstMinus, firstPlus);
+                retList.add(mapFirstMinusAndPlus);
+                firstMinus = 0;
+                firstPlus = 0;
+                changedLineNum = 0;
+                counter = 0;
+            }
+            return retList;
         } catch (Exception ex) {
-            System.out.println("util.GetChangedLineNums()");
+            System.out.println("util.GetListOfFirstMinusAndPlus()");
             ex.printStackTrace();
-            return lstChangedLineNums;
+            return retList;
         }
     }
 
@@ -1168,6 +1207,39 @@ public class util {
     }
 
     Boolean FindFunctionNameAndAddToList(String strPrjWithPatchId, Integer index, LinkedList<String> lstSrc, HashMap<String, String> mapAvailableFns) {
+        try {
+            int i = 0;
+            Boolean foundFnName = false;
+            while (foundFnName == false) {
+                String trimmedSentence;
+                boolean boolCond02 = true;
+                if ((index - i >= 0)) {
+                    trimmedSentence = lstSrc.get(index - i).trim();
+                    if (mapAvailableFns.containsKey(trimmedSentence)) {
+                        String strToAdd = strPrjWithPatchId + data.strPipe + mapAvailableFns.get(trimmedSentence);
+                        if (!lstDiffMappedToFn.contains(strToAdd)) {
+                            lstDiffMappedToFn.add(strToAdd);
+                        }
+                        foundFnName = true;
+                        break;
+                    }
+                } else {
+                    boolCond02 = false;
+                }
+                if (boolCond02 == false) {
+                    break;
+                }
+                i++;
+            }
+            return foundFnName;
+        } catch (Exception ex) {
+            System.out.println("error at util.FindFunctionNameAndAddToList()");
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    Boolean FindFunctionNameInBothDirectionsAndAddToList(String strPrjWithPatchId, Integer index, LinkedList<String> lstSrc, HashMap<String, String> mapAvailableFns) {
         try {
             int i = 0;
             Boolean foundFnName = false;
@@ -1208,7 +1280,7 @@ public class util {
             }
             return foundFnName;
         } catch (Exception ex) {
-            System.out.println("error at util.FindFunctionNameAndAddToList()");
+            System.out.println("error at util.FindFunctionNameInBothDirectionsAndAddToList()");
             ex.printStackTrace();
             return false;
         }
@@ -1518,7 +1590,7 @@ public class util {
             } else {
                 strToAdd += data.strPipe + data.strTest + data.strColonSpace + "0";
             }
-            
+
             if (strTestFileName != null && strTestFileName.isEmpty() == false) {
                 LinkedList<String> lstTestResults = ReadFileToList(dirOutputFile);
                 if (lstTestResults != null && lstTestResults.isEmpty() == false) {
@@ -1712,7 +1784,7 @@ public class util {
     }
 
     public LinkedList<String> FlattenAllFunctions(String strCodeFilePath, String strCleanedXML, String strCleanedCode,
-            String className, LinkedList<String> listFnXMLs) throws Exception {
+                                                  String className, LinkedList<String> listFnXMLs) throws Exception {
         try {
             LinkedList<String> retLst = new LinkedList();
             HashMap<String, String> mapFns = GetAllFunctions(strCleanedXML, listFnXMLs);
