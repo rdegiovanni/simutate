@@ -19,7 +19,7 @@ export PATH=$ANT_HOME/bin:$LIB_HOME:$MVN_REPO:$DEFECTS4J_PATH:$SIMUTATE_MUT_PATH
 module load devel/Spark/2.4.3-intel-2019b-Hadoop-2.7-Java-1.8-Python-3.7.4
 module load lang/Perl/5.30.0-GCCcore-8.3.0
 module load devel/Maven/3.6.3
-mvn compile
+#mvn compile
 
 PROJECT_NAME=$1
 BUG_ID=$2
