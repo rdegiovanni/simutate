@@ -21,4 +21,8 @@ module load lang/Perl/5.30.0-GCCcore-8.3.0
 module load devel/Maven/3.6.3
 mvn compile
 
-java -Xmx8g -Djava.library.path=/usr/local/lib -Dfile.encoding=UTF-8 -classpath "target/classes/:$PATH" simutate.main "$@"
+PROJECT_NAME=$1
+BUG_ID=$2
+java -Xmx8g -Djava.library.path=/usr/local/lib -Dfile.encoding=UTF-8 -classpath "target/classes/:$PATH" simutate.main simulate codebert $PROJECT_NAME $BUG_ID
+rm -rf simulation-codebert/$BUG_ID/b
+rm -rf simulation-codebert/$BUG_ID/f
