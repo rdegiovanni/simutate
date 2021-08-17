@@ -15,6 +15,7 @@ for txt_file in `ls simulation-codebert/simulation-*`; do	# echo $source_file
 	IFS=$OLD_IFS
 	mv $txt_file $SIMU_DIR/.
 	mv -f simulation-codebert/$BUG_ID $SIMU_DIR/.
+	rm -r experiment_mutants-codebert/$BUG_ID
 	#if [[ $BUG_ID == $1* ]] ;
 	#then
 	#  echo $BUG_ID
