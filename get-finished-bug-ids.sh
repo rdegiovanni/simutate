@@ -13,8 +13,8 @@ for txt_file in `ls simulation-codebert/simulation-*`; do	# echo $source_file
 	echo $PROJECT_NAME
 	echo $BUG_ID
 	IFS=$OLD_IFS
-	cp $txt_file $SIMU_DIR/.
-	cp -r simulation-codebert/$BUG_ID $SIMU_DIR/.
+	mv $txt_file $SIMU_DIR/.
+	mv -f simulation-codebert/$BUG_ID $SIMU_DIR/.
 	#if [[ $BUG_ID == $1* ]] ;
 	#then
 	#  echo $BUG_ID
