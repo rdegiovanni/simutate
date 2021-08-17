@@ -108,7 +108,7 @@ public class data {
     static String strFixed = "f";
     static String strSimulationFileName;// = "simulation.txt";
     static String strInitialCommandForAgd4jDocker = ""; //"docker exec agd4j";
-    static String strInitialCommandForDefects4j01 = "/home/agarg/ag/defects4j/defects4j/framework/bin/defects4j";
+    static String strInitialCommandForDefects4j01 = "defects4j";
     static String strInitialCommandForDefects4j = strInitialCommandForAgd4jDocker == "" ? strInitialCommandForDefects4j01 : strInitialCommandForAgd4jDocker + " " + strInitialCommandForDefects4j01;
     static String strInitialCommandForCheckout01 = " checkout -p ";
     static String strInitialCommandForCheckout02 = " -v ";
